@@ -1,5 +1,5 @@
 namespace WaterLogger.Domain.Models;
-
+// asdadsa 
 public class Water
 {
     public int Id { get; set; }
