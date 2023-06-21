@@ -11,6 +11,7 @@ public class BaseRepository<T> : IBaseRepository<T> where T : class
     public BaseRepository(WaterLoggerDbContext dbContext) => WaterLoggerDbContext = dbContext;
     
     //TODO: DO THIS OR ELSE
+    //TODO: CHECK if QUERYABLE is correct or not
     public async Task<IQueryable<T>> GetAsync(Expression<Func<T, bool>> predicate) =>
          WaterLoggerDbContext.Set<T>().Where(predicate).AsQueryable();
 
@@ -37,13 +38,23 @@ public class BaseRepository<T> : IBaseRepository<T> where T : class
         await WaterLoggerDbContext.AddAsync(entity);
     }
 
-    public async Task DeleteAsync(T entity)
+    public void Delete(T entity)
     {
-        throw new NotImplementedException();
+        if (entity is null)
+        {
+            throw new ArgumentNullException();
+        }
+
+        WaterLoggerDbContext.Remove(entity);
     }
 
-    public async Task UpdateAsync(T entity)
+    public void Update(T entity)
     {
-        throw new NotImplementedException();
+        if (entity is null)
+        {
+            throw new ArgumentNullException();
+        }
+
+        WaterLoggerDbContext.Update(entity);
     }
 }

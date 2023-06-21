@@ -1,3 +1,4 @@
+using WaterLogger.DataAccess.Repositories;
 using WaterLogger.Domain.Abstraction.Repositories;
 using WaterLogger.Domain.Abstraction.UnitOfWork;
 
@@ -5,16 +6,14 @@ namespace WaterLogger.DataAccess.UnitOfWork;
 
 public class UnitOfWork : IUnitOfWork
 {
-    public IWaterLoggerRepository WaterLoggerRepository { get; }
+    protected readonly WaterLoggerDbContext DbContext;
+    public IWaterLoggerRepository WaterLoggerRepository { get; private set; }
 
-    //TODO
-    public void Dispose()
+    public UnitOfWork(WaterLoggerDbContext dbContext, IWaterLoggerRepository waterLoggerRepository)
     {
-        throw new NotImplementedException();
+        DbContext = dbContext;
+        WaterLoggerRepository = new WaterLoggerRepository(DbContext);
     }
-
-    public async Task CommitAsync()
-    {
-        throw new NotImplementedException();
-    }
+    public void Dispose() => DbContext.Dispose();
+    public async Task CommitAsync() => await DbContext.SaveChangesAsync();
 }
