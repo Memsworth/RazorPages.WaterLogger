@@ -8,11 +8,12 @@ using WaterLogger.Service;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
+builder.Services.AddTransient<IUnitOfWork, UnitOfWork>();
+builder.Services.AddTransient<IWaterService, WaterService>();
+
 builder.Services.AddRazorPages();
 builder.Services.AddDbContext<WaterLoggerDbContext>(options =>
     options.UseSqlite(builder.Configuration.GetConnectionString("WaterLoggerDb")));
-builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
-builder.Services.AddScoped<IWaterService, WaterService>();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
