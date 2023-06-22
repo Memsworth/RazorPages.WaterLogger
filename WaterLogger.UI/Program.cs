@@ -1,6 +1,8 @@
 using Microsoft.EntityFrameworkCore;
 using WaterLogger.DataAccess;
+using WaterLogger.DataAccess.Repositories;
 using WaterLogger.DataAccess.UnitOfWork;
+using WaterLogger.Domain.Abstraction.Repositories;
 using WaterLogger.Domain.Abstraction.Services;
 using WaterLogger.Domain.Abstraction.UnitOfWork;
 using WaterLogger.Service;
@@ -8,12 +10,16 @@ using WaterLogger.Service;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-builder.Services.AddTransient<IUnitOfWork, UnitOfWork>();
-builder.Services.AddTransient<IWaterService, WaterService>();
+
 
 builder.Services.AddRazorPages();
 builder.Services.AddDbContext<WaterLoggerDbContext>(options =>
     options.UseSqlite(builder.Configuration.GetConnectionString("WaterLoggerDb")));
+
+builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
+builder.Services.AddScoped<IWaterService, WaterService>();
+builder.Services.AddScoped<IWaterLoggerRepository, WaterLoggerRepository>();
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

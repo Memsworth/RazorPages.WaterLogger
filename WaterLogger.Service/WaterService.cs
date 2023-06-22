@@ -1,6 +1,7 @@
 using WaterLogger.Domain.Abstraction.Services;
 using WaterLogger.Domain.Abstraction.UnitOfWork;
 using WaterLogger.Domain.Models;
+using WaterLogger.Domain.Models.DTO;
 
 namespace WaterLogger.Service;
 
@@ -10,22 +11,22 @@ public class WaterService : IWaterService
     public WaterService(IUnitOfWork unitOfWork) => _unitOfWork = unitOfWork;
 
 
-    public async Task<Water> GetExerciseByIdAsync(int id) => await _unitOfWork.WaterLoggerRepository.GetAsync(id);
+    public async Task<Water> GetWaterByIdAsync(int id) => await _unitOfWork.WaterLoggerRepository.GetAsync(id);
 
-    public async Task<List<Water>> GetAllExerciseAsync() => await _unitOfWork.WaterLoggerRepository.GetAsync();
+    public async Task<List<Water>> GetAllWaterAsync() => await _unitOfWork.WaterLoggerRepository.GetAsync();
 
-    public async Task AddExerciseAsync(Water waterItem)
+    public async Task AddWaterAsync(WaterPostDto waterItemPostDto)
     {
-        await _unitOfWork.WaterLoggerRepository.AddAsync(waterItem);
+        await _unitOfWork.WaterLoggerRepository.AddAsync(waterItemPostDto.ToDbo());
         await _unitOfWork.CommitAsync();
     }
 
-    public async Task UpdateExerciseAsync(Water waterItem, Water waterUpdate)
+    public async Task UpdateWaterAsync(Water waterItem, Water waterUpdate)
     {
         await _unitOfWork.CommitAsync();
     }
 
-    public async Task DeleteExerciseAsync(Water waterItem)
+    public async Task DeleteWaterAsync(Water waterItem)
     {
         _unitOfWork.WaterLoggerRepository.Delete(waterItem);
         await _unitOfWork.CommitAsync();

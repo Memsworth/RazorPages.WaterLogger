@@ -12,7 +12,7 @@ public class UnitOfWork : IUnitOfWork
     public UnitOfWork(WaterLoggerDbContext dbContext, IWaterLoggerRepository waterLoggerRepository)
     {
         DbContext = dbContext;
-        WaterLoggerRepository = new WaterLoggerRepository(DbContext);
+        WaterLoggerRepository = waterLoggerRepository;
     }
     public void Dispose() => DbContext.Dispose();
     public async Task CommitAsync() => await DbContext.SaveChangesAsync();

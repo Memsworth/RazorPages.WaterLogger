@@ -22,9 +22,9 @@ namespace WaterLogger.UI.Pages
 
         public async Task OnGetAsync()
         {
-            if (await _waterService.GetAllExerciseAsync() != null)
+            if (await _waterService.GetAllWaterAsync() != null)
             {
-                Water = await _waterService.GetAllExerciseAsync();
+                Water = await _waterService.GetAllWaterAsync();
             }
         }
     }
