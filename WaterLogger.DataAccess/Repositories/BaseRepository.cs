@@ -12,8 +12,8 @@ public class BaseRepository<T> : IBaseRepository<T> where T : class
     
     //TODO: DO THIS OR ELSE
     //TODO: CHECK if QUERYABLE is correct or not
-    public async Task<IQueryable<T>> GetAsync(Expression<Func<T, bool>> predicate) =>
-         WaterLoggerDbContext.Set<T>().Where(predicate).AsQueryable();
+    public async Task<IEnumerable<T>> GetAsync(Expression<Func<T, bool>> predicate) =>
+         await WaterLoggerDbContext.Set<T>().Where(predicate).ToListAsync();
 
     public async Task<IEnumerable<T>> GetAsync() => await WaterLoggerDbContext.Set<T>().ToListAsync();
 
