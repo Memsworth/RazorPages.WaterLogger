@@ -12,7 +12,7 @@ public class WaterService : IWaterService
 
     public async Task<Water> GetExerciseByIdAsync(int id) => await _unitOfWork.WaterLoggerRepository.GetAsync(id);
 
-    public async Task<IEnumerable<Water>> GetAllExerciseAsync() => await _unitOfWork.WaterLoggerRepository.GetAsync();
+    public async Task<List<Water>> GetAllExerciseAsync() => await _unitOfWork.WaterLoggerRepository.GetAsync();
 
     public async Task AddExerciseAsync(Water waterItem)
     {

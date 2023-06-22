@@ -1,18 +1,31 @@
-﻿using Microsoft.AspNetCore.Mvc;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.EntityFrameworkCore;
+using WaterLogger.DataAccess;
+using WaterLogger.Domain.Abstraction.Services;
+using WaterLogger.Domain.Abstraction.UnitOfWork;
+using WaterLogger.Domain.Models;
 
-namespace WaterLogger.UI.Pages;
-
-public class IndexModel : PageModel
+namespace WaterLogger.UI.Pages
 {
-    private readonly ILogger<IndexModel> _logger;
-
-    public IndexModel(ILogger<IndexModel> logger)
+    public class IndexModel : PageModel
     {
-        _logger = logger;
-    }
+        private readonly IWaterService _waterService;
 
-    public void OnGet()
-    {
+        public IndexModel(IWaterService waterService) => _waterService = waterService;
+
+        public IList<Water> Water { get;set; } = default!;
+
+        public async Task OnGetAsync()
+        {
+            if (await _waterService.GetAllExerciseAsync() != null)
+            {
+                Water = await _waterService.GetAllExerciseAsync();
+            }
+        }
     }
 }
