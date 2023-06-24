@@ -5,8 +5,8 @@ namespace WaterLogger.Domain.Abstraction.Services;
 
 public interface IWaterService
 {
-    Task<Water> GetWaterByIdAsync(int id);
-    Task<List<Water>> GetAllWaterAsync();
+    Task<ServiceResponse<Water>> GetWaterByIdAsync(int id);
+    Task<ServiceResponse<IEnumerable<Water>>> GetAllWaterAsync();
     Task AddWaterAsync(WaterPostDto waterItemPostDto);
     Task UpdateWaterAsync(Water waterItem, Water waterUpdate);
     Task DeleteWaterAsync(Water waterItem);

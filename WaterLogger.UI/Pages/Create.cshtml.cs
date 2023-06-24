@@ -24,17 +24,17 @@ namespace WaterLogger.UI.Pages
         }
 
         [BindProperty]
-        public WaterPostDto Water { get; set; } = default!;
+        public WaterPostDto WaterPostDto { get; set; } = default!;
         
 
         // To protect from overposting attacks, see https://aka.ms/RazorPagesCRUD
         public async Task<IActionResult> OnPostAsync()
         {
-          if (!ModelState.IsValid || Water == null)
+          if (!ModelState.IsValid || WaterPostDto is null)
           {
               return Page();
           }
-          await _waterService.AddWaterAsync(Water);
+          await _waterService.AddWaterAsync(WaterPostDto);
           return RedirectToPage("./Index");
         }
     }

@@ -1,3 +1,4 @@
+using Microsoft.EntityFrameworkCore.Metadata;
 using WaterLogger.Domain.Abstraction.Services;
 using WaterLogger.Domain.Abstraction.UnitOfWork;
 using WaterLogger.Domain.Models;
@@ -10,10 +11,41 @@ public class WaterService : IWaterService
     protected readonly IUnitOfWork _unitOfWork;
     public WaterService(IUnitOfWork unitOfWork) => _unitOfWork = unitOfWork;
 
+    public async Task<ServiceResponse<Water>> GetWaterByIdAsync(int id)
+    {
+        try
+        {
+            var item = await _unitOfWork.WaterLoggerRepository.GetAsync(id);
+            if (item is null)
+            {
+                return new ServiceResponse<Water>
+                { Status = ServiceStatus.BadRequest, Message = "User not found" };
+            }
 
-    public async Task<Water> GetWaterByIdAsync(int id) => await _unitOfWork.WaterLoggerRepository.GetAsync(id);
+            return new ServiceResponse<Water>
+                { Status = ServiceStatus.Success, Data = item };
+        }
+        catch (Exception e)
+        {
+            return new ServiceResponse<Water> { Status = ServiceStatus.Error, Message = e.Message };
+        }
+    }
 
-    public async Task<List<Water>> GetAllWaterAsync() => await _unitOfWork.WaterLoggerRepository.GetAsync();
+    public async Task<ServiceResponse<IEnumerable<Water>>> GetAllWaterAsync()
+    {
+        try
+        {
+            var items = await _unitOfWork.WaterLoggerRepository.GetAsync();
+            
+            return new ServiceResponse<IEnumerable<Water>>
+                { Status = ServiceStatus.Success, Data = items };
+        }
+        catch (Exception e)
+        {
+            return new ServiceResponse<IEnumerable<Water>>
+                { Status = ServiceStatus.Error, Message = e.Message };
+        }
+    }
 
     public async Task AddWaterAsync(WaterPostDto waterItemPostDto)
     {

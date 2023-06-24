@@ -15,7 +15,7 @@ public class BaseRepository<T> : IBaseRepository<T> where T : class
     public async Task<List<T>> GetAsync(Expression<Func<T, bool>> predicate) =>
          await WaterLoggerDbContext.Set<T>().Where(predicate).ToListAsync();
 
-    public async Task<List<T>> GetAsync() => await WaterLoggerDbContext.Set<T>().ToListAsync();
+    public async Task<IEnumerable<T>> GetAsync() => await WaterLoggerDbContext.Set<T>().ToListAsync();
 
     public async Task<T> GetAsync(int id)
     {
