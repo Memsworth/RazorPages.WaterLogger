@@ -17,15 +17,10 @@ public class BaseRepository<T> : IBaseRepository<T> where T : class
 
     public async Task<IEnumerable<T>> GetAsync() => await WaterLoggerDbContext.Set<T>().ToListAsync();
 
-    public async Task<T> GetAsync(int id)
+    public async Task<T?> GetAsync(int id)
     {
         var item = await WaterLoggerDbContext.Set<T>().FindAsync(id);
-        if (item is null)
-        {
-            throw new KeyNotFoundException();
-        }
-
-        return item;
+        return item ?? null;
     }
 
     public async Task AddAsync(T entity)

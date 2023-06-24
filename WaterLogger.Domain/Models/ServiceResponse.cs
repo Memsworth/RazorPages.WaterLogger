@@ -3,7 +3,7 @@ namespace WaterLogger.Domain.Models;
 public class ServiceResponse
 {
     public string Message { get; set; }
-    public ServiceStatus Status { get; set; } = ServiceStatus.Success;
+    public ResponseStatus Status { get; set; } = ResponseStatus.Success;
 }
 
 public class ServiceResponse<T> : ServiceResponse

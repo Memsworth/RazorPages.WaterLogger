@@ -7,7 +7,7 @@ public interface IWaterService
 {
     Task<ServiceResponse<Water>> GetWaterByIdAsync(int id);
     Task<ServiceResponse<IEnumerable<Water>>> GetAllWaterAsync();
-    Task AddWaterAsync(WaterPostDto waterItemPostDto);
+    Task<ServiceResponse<int>> AddWaterAsync(WaterPostDto waterItem);
     Task UpdateWaterAsync(Water waterItem, Water waterUpdate);
     Task DeleteWaterAsync(Water waterItem);
 }

@@ -1,13 +1,6 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.EntityFrameworkCore;
-using WaterLogger.DataAccess;
 using WaterLogger.Domain.Abstraction.Services;
-using WaterLogger.Domain.Abstraction.UnitOfWork;
 using WaterLogger.Domain.Models;
 
 namespace WaterLogger.UI.Pages
@@ -22,9 +15,10 @@ namespace WaterLogger.UI.Pages
 
         public async Task OnGetAsync()
         {
-            if (await _waterService.GetAllWaterAsync() != null)
+            var item = await _waterService.GetAllWaterAsync();
+            if (item.Status is ResponseStatus.Success)
             {
-                Water = await _waterService.GetAllWaterAsync();
+                Water = item.Data.ToList();
             }
         }
     }

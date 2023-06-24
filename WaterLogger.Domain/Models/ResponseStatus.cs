@@ -1,6 +1,6 @@
 namespace WaterLogger.Domain.Models;
 
-public enum ServiceStatus
+public enum ResponseStatus
 {
     Error,
     BadRequest,

@@ -1,15 +1,8 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.AspNetCore.Mvc.Rendering;
-using WaterLogger.DataAccess;
 using WaterLogger.Domain.Abstraction.Services;
 using WaterLogger.Domain.Models;
 using WaterLogger.Domain.Models.DTO;
-using WaterLogger.Service;
 
 namespace WaterLogger.UI.Pages
 {
@@ -25,17 +18,12 @@ namespace WaterLogger.UI.Pages
 
         [BindProperty]
         public WaterPostDto WaterPostDto { get; set; } = default!;
-        
 
-        // To protect from overposting attacks, see https://aka.ms/RazorPagesCRUD
         public async Task<IActionResult> OnPostAsync()
-        {
-          if (!ModelState.IsValid || WaterPostDto is null)
-          {
-              return Page();
-          }
-          await _waterService.AddWaterAsync(WaterPostDto);
-          return RedirectToPage("./Index");
+        { 
+            if (!ModelState.IsValid || WaterPostDto is null) return RedirectToPage("/Error");
+            var response = await _waterService.AddWaterAsync(WaterPostDto);
+            return RedirectToPage(response.Status is ResponseStatus.Success ? "./Index" : "/Error");
         }
     }
 }

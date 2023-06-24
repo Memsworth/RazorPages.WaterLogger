@@ -37,7 +37,7 @@ namespace WaterLogger.UI.Pages
                 return NotFound();
             }
 
-            WaterItemToDelete = waterItem;
+            //WaterItemToDelete = waterItem;
             return Page();
         }
 

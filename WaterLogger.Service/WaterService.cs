@@ -19,15 +19,15 @@ public class WaterService : IWaterService
             if (item is null)
             {
                 return new ServiceResponse<Water>
-                { Status = ServiceStatus.BadRequest, Message = "User not found" };
+                { Status = ResponseStatus.BadRequest, Message = "User not found" };
             }
 
             return new ServiceResponse<Water>
-                { Status = ServiceStatus.Success, Data = item };
+                { Status = ResponseStatus.Success, Data = item };
         }
         catch (Exception e)
         {
-            return new ServiceResponse<Water> { Status = ServiceStatus.Error, Message = e.Message };
+            return new ServiceResponse<Water> { Status = ResponseStatus.Error, Message = e.Message };
         }
     }
 
@@ -36,21 +36,30 @@ public class WaterService : IWaterService
         try
         {
             var items = await _unitOfWork.WaterLoggerRepository.GetAsync();
-            
             return new ServiceResponse<IEnumerable<Water>>
-                { Status = ServiceStatus.Success, Data = items };
+                { Status = ResponseStatus.Success, Data = items };
         }
         catch (Exception e)
         {
             return new ServiceResponse<IEnumerable<Water>>
-                { Status = ServiceStatus.Error, Message = e.Message };
+                { Status = ResponseStatus.Error, Message = e.Message };
         }
     }
 
-    public async Task AddWaterAsync(WaterPostDto waterItemPostDto)
+    public async Task<ServiceResponse<int>> AddWaterAsync(WaterPostDto waterItem)
     {
-        await _unitOfWork.WaterLoggerRepository.AddAsync(waterItemPostDto.ToDbo());
-        await _unitOfWork.CommitAsync();
+        try
+        {
+            await _unitOfWork.WaterLoggerRepository.AddAsync(waterItem.ToDbo());
+            await _unitOfWork.CommitAsync();
+            return new ServiceResponse<int>
+                { Status = ResponseStatus.Success, Message = "Item Inserted" };
+        }
+        catch (Exception e)
+        {
+            return new ServiceResponse<int>
+                { Status = ResponseStatus.Error, Message = e.Message };
+        }
     }
 
     public async Task UpdateWaterAsync(Water waterItem, Water waterUpdate)
