@@ -11,8 +11,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WaterLogger.Service", "Wate
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WaterLogger.UI", "WaterLogger.UI\WaterLogger.UI.csproj", "{3A54D0E9-F4B5-4ECA-B38E-72171D2E4390}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "api", "api\api.csproj", "{63E7B36D-15F6-4BC2-ADAE-B4323DDF6232}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -35,10 +33,6 @@ Global
 		{3A54D0E9-F4B5-4ECA-B38E-72171D2E4390}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3A54D0E9-F4B5-4ECA-B38E-72171D2E4390}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3A54D0E9-F4B5-4ECA-B38E-72171D2E4390}.Release|Any CPU.Build.0 = Release|Any CPU
-		{63E7B36D-15F6-4BC2-ADAE-B4323DDF6232}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{63E7B36D-15F6-4BC2-ADAE-B4323DDF6232}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{63E7B36D-15F6-4BC2-ADAE-B4323DDF6232}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{63E7B36D-15F6-4BC2-ADAE-B4323DDF6232}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
