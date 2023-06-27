@@ -1,17 +1,17 @@
 using System.Linq.Expressions;
 using Microsoft.EntityFrameworkCore;
 using WaterLogger.Domain.Abstraction.Repositories;
+using WaterLogger.Domain.Models;
 
 namespace WaterLogger.DataAccess.Repositories;
 
-
-public class BaseRepository<T> : IBaseRepository<T> where T : class
+public class BaseRepository<T> : IBaseRepository<T> where T : DbBaseModel
 {
     protected readonly WaterLoggerDbContext WaterLoggerDbContext;
     public BaseRepository(WaterLoggerDbContext dbContext) => WaterLoggerDbContext = dbContext;
-    
+
     public async Task<List<T>> GetAsync(Expression<Func<T, bool>> predicate) =>
-         await WaterLoggerDbContext.Set<T>().Where(predicate).ToListAsync();
+        await WaterLoggerDbContext.Set<T>().Where(predicate).ToListAsync();
 
     public async Task<IEnumerable<T>> GetAsync() => await WaterLoggerDbContext.Set<T>().ToListAsync();
 

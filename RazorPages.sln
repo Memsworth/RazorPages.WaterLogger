@@ -11,6 +11,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WaterLogger.Service", "Wate
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WaterLogger.UI", "WaterLogger.UI\WaterLogger.UI.csproj", "{3A54D0E9-F4B5-4ECA-B38E-72171D2E4390}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{531DF04E-5ED5-49C2-A4AA-C568E22DEA48}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WaterLogger.Tests", "WaterLogger.Tests\WaterLogger.Tests.csproj", "{81CAD935-AA7C-445A-B274-28C5DBE772F2}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -33,11 +37,18 @@ Global
 		{3A54D0E9-F4B5-4ECA-B38E-72171D2E4390}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3A54D0E9-F4B5-4ECA-B38E-72171D2E4390}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3A54D0E9-F4B5-4ECA-B38E-72171D2E4390}.Release|Any CPU.Build.0 = Release|Any CPU
+		{81CAD935-AA7C-445A-B274-28C5DBE772F2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{81CAD935-AA7C-445A-B274-28C5DBE772F2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{81CAD935-AA7C-445A-B274-28C5DBE772F2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{81CAD935-AA7C-445A-B274-28C5DBE772F2}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {BBCD53C5-F1FC-46AF-916B-01CB586DE665}
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{81CAD935-AA7C-445A-B274-28C5DBE772F2} = {531DF04E-5ED5-49C2-A4AA-C568E22DEA48}
 	EndGlobalSection
 EndGlobal
