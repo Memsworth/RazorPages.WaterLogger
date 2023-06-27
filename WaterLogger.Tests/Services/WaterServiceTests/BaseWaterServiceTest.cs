@@ -18,8 +18,7 @@ public class BaseWaterServiceTest
     public BaseWaterServiceTest()
     {
         MockUnitOfWork = new Mock<IUnitOfWork>();
-        MockUnitOfWork.Setup(w => w.WaterLoggerRepository)
-            .Returns(_mockWaterLoggerRepository.Object);
+        MockUnitOfWork.Setup(w => w.WaterLoggerRepository).Returns(_mockWaterLoggerRepository.Object);
 
         Sut = new WaterService(MockUnitOfWork.Object);
 
