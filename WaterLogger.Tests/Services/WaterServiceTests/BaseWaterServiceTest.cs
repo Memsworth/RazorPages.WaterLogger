@@ -1,3 +1,4 @@
+using System.Linq.Expressions;
 using Moq;
 using WaterLogger.Domain.Abstraction.Repositories;
 using WaterLogger.Domain.Abstraction.UnitOfWork;
@@ -47,5 +48,8 @@ public class BaseWaterServiceTest
 
         mock.Setup(w => w.AddAsync(It.IsAny<T>()))
             .Callback((T w) => referenceList.Add(w));
+
+        mock.Setup(w => w.GetAsync(It.IsAny<Expression<Func<T, bool>>>()))
+            .ReturnsAsync((Expression<Func<T, bool>> w) => referenceList.Where(w.Compile()).ToList());
     }
 }
