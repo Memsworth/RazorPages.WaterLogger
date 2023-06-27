@@ -7,35 +7,29 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using WaterLogger.DataAccess;
+using WaterLogger.Domain.Abstraction.Services;
 using WaterLogger.Domain.Models;
 
 namespace WaterLogger.UI.Pages
 {
     public class EditModel : PageModel
     {
-        private readonly WaterLogger.DataAccess.WaterLoggerDbContext _context;
+        private readonly IWaterService _waterService;
 
-        public EditModel(WaterLogger.DataAccess.WaterLoggerDbContext context)
-        {
-            _context = context;
-        }
+        public EditModel(IWaterService waterService) => _waterService = waterService;
 
         [BindProperty]
         public Water Water { get; set; } = default!;
 
-        public async Task<IActionResult> OnGetAsync(int? id)
+        public async Task<IActionResult> OnGetAsync(int id)
         {
-            if (id == null || _context.WaterLog == null)
-            {
-                return NotFound();
-            }
 
-            var water =  await _context.WaterLog.FirstOrDefaultAsync(m => m.Id == id);
-            if (water == null)
+            var waterItem = await _waterService.GetWaterByIdAsync(id);
+            if (waterItem.Status is not ResponseStatus.Success)
             {
-                return NotFound();
+                return NotFound($"{waterItem.Message}");
             }
-            Water = water;
+            Water = waterItem.Data;
             return Page();
         }
 
@@ -48,30 +42,9 @@ namespace WaterLogger.UI.Pages
                 return Page();
             }
 
-            _context.Attach(Water).State = EntityState.Modified;
+            var result = await _waterService.UpdateWaterAsync(Water);
 
-            try
-            {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!WaterExists(Water.Id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
-
-            return RedirectToPage("./Index");
-        }
-
-        private bool WaterExists(int id)
-        {
-          return (_context.WaterLog?.Any(e => e.Id == id)).GetValueOrDefault();
+            return RedirectToPage(result.Status is not ResponseStatus.Success ? "./Error" : "./Index");
         }
     }
 }

@@ -62,14 +62,36 @@ public class WaterService : IWaterService
         }
     }
 
-    public async Task UpdateWaterAsync(Water waterItem, Water waterUpdate)
+    public async Task<ServiceResponse<int>> UpdateWaterAsync(Water waterItem)
     {
-        await _unitOfWork.CommitAsync();
+        try
+        {
+            _unitOfWork.WaterLoggerRepository.Update(waterItem);
+            await _unitOfWork.CommitAsync();
+            return new ServiceResponse<int>()
+            { Status = ResponseStatus.Success, Message = "Item Updated"};
+        }
+        catch (Exception e)
+        {
+            return new ServiceResponse<int>
+                { Status = ResponseStatus.Error, Message = e.Message };
+        }
     }
 
-    public async Task DeleteWaterAsync(Water waterItem)
+    public async Task<ServiceResponse<int>> DeleteWaterAsync(Water waterItem)
     {
-        _unitOfWork.WaterLoggerRepository.Delete(waterItem);
-        await _unitOfWork.CommitAsync();
+        try
+        {
+            _unitOfWork.WaterLoggerRepository.Delete(waterItem);
+            await _unitOfWork.CommitAsync();
+
+            return new ServiceResponse<int>
+            { Status = ResponseStatus.Success, Message = "Item is deleted" };
+        }
+        catch (Exception e)
+        {
+            return new ServiceResponse<int>()
+                { Status = ResponseStatus.Error, Message = e.Message };
+        }
     }
 }

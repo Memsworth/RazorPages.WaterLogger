@@ -24,34 +24,20 @@ namespace WaterLogger.UI.Pages
 
         public async Task<IActionResult> OnGetAsync(int id)
         {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
             var waterItem = await _waterService.GetWaterByIdAsync(id);
-
-            
-            if (waterItem is null)
+            if (waterItem.Status is not ResponseStatus.Success)
             {
-                return NotFound();
+                return NotFound($"{waterItem.Message}");
             }
 
-            //WaterItemToDelete = waterItem;
+            WaterItemToDelete = waterItem.Data;
             return Page();
         }
 
         public async Task<IActionResult> OnPostAsync()
         {
-            if (WaterItemToDelete is null)
-            {
-                return RedirectToPage("./Error");
-            }
-            if (WaterItemToDelete is not null)
-            {
-                await _waterService.DeleteWaterAsync(WaterItemToDelete);
-            }
-            return RedirectToPage("./Index");
+            var result = await _waterService.DeleteWaterAsync(WaterItemToDelete);
+            return RedirectToPage(result.Status is not ResponseStatus.Success ? "./Error" : "./Index");
         }
     }
 }

@@ -10,8 +10,6 @@ public class BaseRepository<T> : IBaseRepository<T> where T : class
     protected readonly WaterLoggerDbContext WaterLoggerDbContext;
     public BaseRepository(WaterLoggerDbContext dbContext) => WaterLoggerDbContext = dbContext;
     
-    //TODO: DO THIS OR ELSE
-    //TODO: CHECK if QUERYABLE is correct or not
     public async Task<List<T>> GetAsync(Expression<Func<T, bool>> predicate) =>
          await WaterLoggerDbContext.Set<T>().Where(predicate).ToListAsync();
 
